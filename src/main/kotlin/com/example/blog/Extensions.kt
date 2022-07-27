@@ -31,6 +31,3 @@ fun String.toSlug() = lowercase(Locale.getDefault())
         .split(" ")
         .joinToString("-")
         .replace("-+".toRegex(), "-")
-
-class Extensions {
-}

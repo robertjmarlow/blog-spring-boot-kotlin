@@ -23,6 +23,3 @@ class User(
         var lastname: String,
         var description: String? = null,
         @Id @GeneratedValue var id: Long? = null)
-
-class Entities {
-}
