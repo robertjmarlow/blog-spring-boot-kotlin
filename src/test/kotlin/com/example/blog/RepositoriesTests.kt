@@ -9,9 +9,10 @@ import org.springframework.data.repository.findByIdOrNull
 
 @DataJpaTest
 class RepositoriesTests @Autowired constructor(
-        val entityManager: TestEntityManager,
-        val userRepository: UserRepository,
-        val articleRepository: ArticleRepository) {
+    val entityManager: TestEntityManager,
+    val userRepository: UserRepository,
+    val articleRepository: ArticleRepository
+) {
     @Test
     fun `When findByIdOrNull then return Article`() {
         val juergen = User("springjuergen", "Juergen", "Hoeller")
