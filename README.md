@@ -11,3 +11,9 @@ Automagically format Kotlin source files with:
 ```sh
 gradle ktlintFormat
 ```
+
+Run Spotbugs:
+
+```
+gradle spotbugsMain
+```

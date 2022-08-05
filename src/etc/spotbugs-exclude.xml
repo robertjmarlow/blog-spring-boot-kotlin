@@ -1,0 +1,19 @@
+<FindBugsFilter>
+    <!-- since these are Entities, spotbugs really doesn't like some of the stuff these classes are doing -->
+    <Match>
+        <Class name="com.example.blog.Article" />
+    </Match>
+    <Match>
+        <Class name="com.example.blog.User" />
+    </Match>
+
+    <!-- spotbugs doesn't like exposing or setting of mutable members -->
+    <Match>
+        <Class name="com.example.blog.HtmlController$RenderedArticle" />
+        <Bug pattern="EI_EXPOSE_REP, EI_EXPOSE_REP2" />
+    </Match>
+    <Match>
+        <Class name="com.example.blog.HtmlController" />
+        <Bug pattern="EI_EXPOSE_REP2" />
+    </Match>
+</FindBugsFilter>

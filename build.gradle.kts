@@ -9,6 +9,7 @@ plugins {
     kotlin("plugin.allopen") version "1.7.10"
     kotlin("kapt") version "1.7.10"
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
+    id("com.github.spotbugs") version "5.0.9"
 }
 
 group = "com.example"
@@ -54,4 +55,8 @@ allOpen {
     annotation("javax.persistence.Entity")
     annotation("javax.persistence.Embeddable")
     annotation("javax.persistence.MappedSuperclass")
+}
+
+spotbugs {
+    excludeFilter.set(file("src/etc/spotbugs-exclude.xml"))
 }
