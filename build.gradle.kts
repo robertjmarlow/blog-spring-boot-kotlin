@@ -10,6 +10,7 @@ plugins {
     kotlin("kapt") version "1.7.10"
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
     id("com.github.spotbugs") version "5.0.9"
+    jacoco
 }
 
 group = "com.example"
@@ -59,4 +60,12 @@ allOpen {
 
 spotbugs {
     excludeFilter.set(file("src/etc/spotbugs-exclude.xml"))
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+}
+
+jacoco {
+    toolVersion = "0.8.8"
 }
