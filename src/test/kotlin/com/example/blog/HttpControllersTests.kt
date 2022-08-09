@@ -36,6 +36,28 @@ class HttpControllersTests(@Autowired val mockMvc: MockMvc) {
     }
 
     @Test
+    fun `get article`() {
+        val juergen = User("springjuergen", "Juergen", "Hoeller")
+        val spring5Article = Article("Spring Framework 5.0 goes GA", "Dear Spring community ...", "Lorem ipsum", juergen)
+        val slug = "spring-framework-5-0-goes-ga"
+        every { articleRepository.findBySlug(eq(slug)) } returns spring5Article
+        mockMvc.perform(get("/api/article/$slug").accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("\$.author.login").value(juergen.login))
+            .andExpect(jsonPath("\$.slug").value(spring5Article.slug))
+    }
+
+    @Test
+    fun `get non-existent article`() {
+        val slug = "spring-framework-5-0-goes-ga"
+        every { articleRepository.findBySlug(eq(slug)) } returns null
+        mockMvc.perform(get("/api/article/$slug").accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound)
+            .andExpect(status().reason("This article does not exist"))
+    }
+
+    @Test
     fun `List users`() {
         val juergen = User("springjuergen", "Juergen", "Hoeller")
         val smaldini = User("smaldini", "Stéphane", "Maldini")
