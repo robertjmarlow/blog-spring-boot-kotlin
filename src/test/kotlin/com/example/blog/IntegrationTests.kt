@@ -34,6 +34,14 @@ class IntegrationTests(@Autowired val restTemplate: TestRestTemplate) {
         assertThat(entity.body).contains(title, "Lorem ipsum", "dolor sit amet")
     }
 
+    @Test
+    fun `Assert non-existent page is a 404`() {
+        println(">> Assert non-existent article page title, content and status code")
+        val entity = restTemplate.getForEntity<String>("/article/lol-i-dont-exist")
+        assertThat(entity.statusCode).isEqualTo(HttpStatus.NOT_FOUND)
+        assertThat(entity.body).contains("Not Found")
+    }
+
     @AfterAll
     fun teardown() {
         println(">> Tear down")
