@@ -68,4 +68,24 @@ class HttpControllersTests(@Autowired val mockMvc: MockMvc) {
             .andExpect(jsonPath("\$.[0].login").value(juergen.login))
             .andExpect(jsonPath("\$.[1].login").value(smaldini.login))
     }
+
+    @Test
+    fun `get user`() {
+        val login = "springjuergen"
+        val juergen = User(login, "Juergen", "Hoeller")
+        every { userRepository.findByLogin(eq(login)) } returns juergen
+        mockMvc.perform(get("/api/user/$login").accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("\$.login").value(juergen.login))
+    }
+
+    @Test
+    fun `get non-existent user`() {
+        val login = "springjuergen"
+        every { userRepository.findByLogin(eq(login)) } returns null
+        mockMvc.perform(get("/api/user/$login").accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound)
+            .andExpect(status().reason("This user does not exist"))
+    }
 }
